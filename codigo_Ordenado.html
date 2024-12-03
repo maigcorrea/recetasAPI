@@ -29,7 +29,7 @@
             <div class="col"><h1>R<span>A</span>PPI</h1></div>
             <nav class="col-auto ms-auto">
                 <a href="index.html">Inicio</a>
-                <a href="recetasFav.html">Favoritos</a>
+                <a href="fav.html">Favoritos</a>
             </nav>
         </div>
     </header>
@@ -59,7 +59,7 @@
                     <h2>Ingredientes</h2><ul></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="guardarComoFavorito()">Guardar Favorito</button>
+                    <button type="button" class="btn btn-primary" >Guardar Favorito</button>   <!--onclick="guardarComoFavorito(idReceta)" -->
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -67,10 +67,20 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="funciones.js"></script> -->
     <script>
         const selectorCategorias = document.querySelector("#categoriaSelect"); 
         const row = document.querySelector("#recetas .row");
+        let idFavoritos= [];//Array donde se almacenará el id de las recetas añadidas a favoritos, si hay algo en el localStorage se carga en el array, si no hay nada, se deja vacío
+        if(localStorage.length!=0){
+            for (let index=0; index<localStorage.length; index++) {
+                idFavoritos.push(localStorage.getItem(index));
+            }
+        }
 
+
+
+        console.log(idFavoritos);
         function obtenerDatos(url) {
             return fetch(url).then(res => res.json());
         }
@@ -117,26 +127,49 @@
 
         function mostrarReceta(idReceta) {
             const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceta}`;
-            obtenerDatos(url).then(datos => {
-                const receta = datos.meals[0];
-                document.querySelector(".modal-title").textContent = receta.strMeal;
-                document.querySelector(".modal-body img").src = receta.strMealThumb;
-                document.querySelector(".modal-body p").textContent = receta.strInstructions;
+            let modalTitle=document.querySelector(".modal-title");
+            let modalContenido=document.querySelector(".modal-body p");
+            let modalImg=document.querySelector(".modal-body img");
+            let modalUl=document.querySelector(".modal-body ul");
+            const btnFavoritos=document.querySelector(".modal-footer button:nth-child(1)");
+            
+            
 
-                const ingredientes = document.querySelector(".modal-body ul");
-                ingredientes.innerHTML = "";
+            obtenerDatos(url)
+            .then((datosReceta,index) => {
+                const receta = datosReceta.meals[0];
+                modalTitle.textContent = receta.strMeal;
+                modalImg.setAttribute("src",receta.strMealThumb);
+                modalContenido.textContent = receta.strInstructions;
+
+                // const ingredientes = document.querySelector(".modal-body ul");
+                modalUl.innerHTML = "";
                 for (let i = 1; i <= 20; i++) {
                     const ingrediente = receta[`strIngredient${i}`];
                     const medida = receta[`strMeasure${i}`];
-                    if (ingrediente) {
-                        ingredientes.innerHTML += `<li>${ingrediente} - ${medida}</li>`;
+                    if(ingrediente!="" && ingrediente!=null){
+                        modalUl.innerHTML+=`
+                            <li>${ingrediente} - ${medida}</li>
+                        `;
                     }
                 }
-            });
+
+                // Modificar el botón del modal para usar onclick
+                const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
+                btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
+            });    
         }
 
-        function guardarComoFavorito() {
-            console.log("Guardado");
+        function guardarComoFavorito(idReceta) {
+            
+            if(!idFavoritos.includes(idReceta)){
+                idFavoritos.push(idReceta);
+                
+                idFavoritos.forEach((id,index)=>{
+                    localStorage.setItem(index,id);
+                })
+                //Aquí saldría un modal diciendo guardado correctamente
+            }
         }
 
         document.addEventListener("DOMContentLoaded", cargarCategorias);

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
+</head>
+<body>
+    <script>
+        
+        //Lo que haya en el local storage se mete en un array
+        let idRecetasAlmacenadas=[];
+        if(localStorage.length!=0){
+            for (let index=0; index<localStorage.length; index++) {
+                idRecetasAlmacenadas.push(localStorage.getItem(index));
+            }
+        }
+
+        
+        idRecetasAlmacenadas.forEach(id => {
+            let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+            console.log(url);
+            fetch(url).
+            then(res => res.json())
+            .then(datosReceta=>{
+                console.log(datosReceta.meals[0].strMealThumb);
+                // const col = document.createElement("div");
+                // col.classList.add("col-md-4");
+                // col.innerHTML = `
+                //     <div class="card text-white bg-primary mb-3">
+                //         <div class="card-header">
+                //             <img src="${datosReceta.meals.strMealThumb}" class="img-fluid">
+                //         </div>
+                //         <div class="card-body">
+                //             <h4 class="card-title">${datosReceta.meals.strMeal}</h4>
+                //             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
+                //                 Abrir receta
+                //             </button>
+                //         </div>
+                //     </div>`;
+
+                // document.body.append(col);
+            })
+
+            
+        });
+    </script>
+</body>
+</html>
