@@ -1,5 +1,4 @@
 
-
 function obtenerDatos(url) {
     return fetch(url).then(res => res.json());
 }
@@ -47,5 +46,56 @@ function crearTarjetaReceta(receta) {
             </div>
         </div>`;
     return col;
+}
+
+
+
+function mostrarReceta(idReceta) {
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceta}`;
+    let modalTitle=document.querySelector(".modal-title");
+    let modalContenido=document.querySelector(".modal-body p");
+    let modalImg=document.querySelector(".modal-body img");
+    let modalUl=document.querySelector(".modal-body ul");
+    const btnFavoritos=document.querySelector(".modal-footer button:nth-child(1)");
+    
+    
+
+    obtenerDatos(url)
+    .then((datosReceta,index) => {
+        const receta = datosReceta.meals[0];
+        modalTitle.textContent = receta.strMeal;
+        modalImg.setAttribute("src",receta.strMealThumb);
+        modalContenido.textContent = receta.strInstructions;
+
+        // const ingredientes = document.querySelector(".modal-body ul");
+        modalUl.innerHTML = "";
+        for (let i = 1; i <= 20; i++) {
+            const ingrediente = receta[`strIngredient${i}`];
+            const medida = receta[`strMeasure${i}`];
+            if(ingrediente!="" && ingrediente!=null){
+                modalUl.innerHTML+=`
+                    <li>${ingrediente} - ${medida}</li>
+                `;
+            }
+        }
+
+        // Modificar el botón del modal para usar onclick
+        const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
+        btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
+    });    
+}
+
+
+
+function guardarComoFavorito(idReceta) {
+            
+    if(!idFavoritos.includes(idReceta)){
+        idFavoritos.push(idReceta);
+        
+        idFavoritos.forEach((id,index)=>{
+            localStorage.setItem(index,id);
+        })
+        //Aquí saldría un modal diciendo guardado correctamente
+    }
 }
 

@@ -38,6 +38,26 @@
         <div class="row"></div>
     </div>
 
+    <div class="modal fade" id="emergente" tabindex="-1" aria-labelledby="emergenteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="emergenteLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center"><img src="" alt="" class="img-fluid"></div>
+                    <h2>Instrucciones</h2><p></p>
+                    <h2>Ingredientes</h2><ul></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Guardar Favorito</button>   <!--onclick="guardarComoFavorito(idReceta)" -->
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const containerRecetas=document.querySelector("#recetas .row");
 
@@ -56,6 +76,7 @@
             .then(datosReceta=>{
                 const col = document.createElement("div");
                 col.classList.add("col-md-4");
+                containerRecetas.append(col);
                 col.innerHTML = `
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-header">
@@ -63,13 +84,13 @@
                         </div>
                         <div class="card-body">
                             <h4 class="card-title">${datosReceta.meals[0].strMeal}</h4>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" onclick="mostrarReceta(${datosReceta.meals[0].idMeal})">
                                 Abrir receta
                             </button>
                         </div>
                     </div>`;
-
-                containerRecetas.append(col);
+                    console.log(datosReceta.meals[0].idMeal);
+               
             })
         });
 
@@ -82,6 +103,47 @@
             containerRecetas.append(col);
         }
 
+
+        function obtenerDatos(url) {
+            return fetch(url).then(res => res.json());
+        }
+
+
+        function mostrarReceta(idReceta) {
+            const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceta}`;
+            console.log(url);
+            let modalTitle=document.querySelector(".modal-title");
+            console.log(modalTitle);
+            let modalContenido=document.querySelector(".modal-body p");
+            let modalImg=document.querySelector(".modal-body img");
+            let modalUl=document.querySelector(".modal-body ul");
+            const btnFavoritos=document.querySelector(".modal-footer button:nth-child(1)");           
+
+            obtenerDatos(url)
+            .then((datosReceta,index) => {
+                const receta = datosReceta.meals[0];
+                modalTitle.textContent = receta.strMeal;
+                modalImg.setAttribute("src",receta.strMealThumb);
+                modalContenido.textContent = receta.strInstructions;
+
+                console.log(modalTitle);
+                // const ingredientes = document.querySelector(".modal-body ul");
+                modalUl.innerHTML = "";
+                for (let i = 1; i <= 20; i++) {
+                    const ingrediente = receta[`strIngredient${i}`];
+                    const medida = receta[`strMeasure${i}`];
+                    if(ingrediente!="" && ingrediente!=null){
+                        modalUl.innerHTML+=`
+                            <li>${ingrediente} - ${medida}</li>
+                        `;
+                    }
+                }
+
+                // Modificar el botón del modal para usar onclick
+                const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
+                btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
+            });    
+        }
         
         // idRecetasAlmacenadas.forEach(id => {
         //     let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -109,6 +171,8 @@
 
             
         // });
+        
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
