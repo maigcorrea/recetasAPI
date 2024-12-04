@@ -47,16 +47,13 @@
             for (let index=0; index<localStorage.length; index++) {
                 idRecetasAlmacenadas.push(localStorage.getItem(index));
             }
-        }
 
-        
-        idRecetasAlmacenadas.forEach(id => {
+            idRecetasAlmacenadas.forEach(id => {
             let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
             console.log(url);
             fetch(url).
             then(res => res.json())
             .then(datosReceta=>{
-                console.log(datosReceta.meals[0].strMealThumb);
                 const col = document.createElement("div");
                 col.classList.add("col-md-4");
                 col.innerHTML = `
@@ -74,9 +71,44 @@
 
                 containerRecetas.append(col);
             })
+        });
+
+        }else{
+            const col = document.createElement("div");
+            col.classList.add("col-md-4");
+            col.innerHTML=`
+                <p>No hay recetas añadidas</p>
+            `;
+            containerRecetas.append(col);
+        }
+
+        
+        // idRecetasAlmacenadas.forEach(id => {
+        //     let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+        //     console.log(url);
+        //     fetch(url).
+        //     then(res => res.json())
+        //     .then(datosReceta=>{
+        //         const col = document.createElement("div");
+        //         col.classList.add("col-md-4");
+        //         col.innerHTML = `
+        //             <div class="card text-white bg-primary mb-3">
+        //                 <div class="card-header">
+        //                     <img src="${datosReceta.meals[0].strMealThumb}" class="img-fluid">
+        //                 </div>
+        //                 <div class="card-body">
+        //                     <h4 class="card-title">${datosReceta.meals[0].strMeal}</h4>
+        //                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
+        //                         Abrir receta
+        //                     </button>
+        //                 </div>
+        //             </div>`;
+
+        //         containerRecetas.append(col);
+        //     })
 
             
-        });
+        // });
     </script>
 </body>
 </html>
