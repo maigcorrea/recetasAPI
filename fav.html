@@ -5,10 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
+    <style>
+        nav a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-left: 20px;
+        }
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        header h1 span { color: black; }
+        .modal-content { height: 800px; overflow-y: scroll; }
+    </style>
 </head>
 <body>
+    <header id="header" class="container bg-danger py-4">
+        <div class="row">
+            <div class="col"><h1>R<span>A</span>PPI</h1></div>
+            <nav class="col-auto ms-auto">
+                <a href="codigo_Ordenado.html">Inicio</a>
+                <a href="fav.html">Favoritos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container my-5" id="recetas">
+        <div class="row"></div>
+    </div>
+
     <script>
-        
+        const containerRecetas=document.querySelector("#recetas .row");
+
         //Lo que haya en el local storage se mete en un array
         let idRecetasAlmacenadas=[];
         if(localStorage.length!=0){
@@ -25,22 +57,22 @@
             then(res => res.json())
             .then(datosReceta=>{
                 console.log(datosReceta.meals[0].strMealThumb);
-                // const col = document.createElement("div");
-                // col.classList.add("col-md-4");
-                // col.innerHTML = `
-                //     <div class="card text-white bg-primary mb-3">
-                //         <div class="card-header">
-                //             <img src="${datosReceta.meals.strMealThumb}" class="img-fluid">
-                //         </div>
-                //         <div class="card-body">
-                //             <h4 class="card-title">${datosReceta.meals.strMeal}</h4>
-                //             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
-                //                 Abrir receta
-                //             </button>
-                //         </div>
-                //     </div>`;
+                const col = document.createElement("div");
+                col.classList.add("col-md-4");
+                col.innerHTML = `
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">
+                            <img src="${datosReceta.meals[0].strMealThumb}" class="img-fluid">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">${datosReceta.meals[0].strMeal}</h4>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
+                                Abrir receta
+                            </button>
+                        </div>
+                    </div>`;
 
-                // document.body.append(col);
+                containerRecetas.append(col);
             })
 
             
