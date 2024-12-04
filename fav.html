@@ -57,39 +57,26 @@
             </div>
         </div>
     </div>
-
+    <script src="funciones.js"></script>
     <script>
         const containerRecetas=document.querySelector("#recetas .row");
 
         //Lo que haya en el local storage se mete en un array
-        let idRecetasAlmacenadas=[];
+        let idFavoritos=[];
         if(localStorage.length!=0){
             for (let index=0; index<localStorage.length; index++) {
-                idRecetasAlmacenadas.push(localStorage.getItem(index));
+                idFavoritos.push(localStorage.getItem(index));
             }
 
-            idRecetasAlmacenadas.forEach(id => {
+            idFavoritos.forEach(id => {
             let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
             console.log(url);
             fetch(url).
             then(res => res.json())
             .then(datosReceta=>{
-                const col = document.createElement("div");
-                col.classList.add("col-md-4");
-                containerRecetas.append(col);
-                col.innerHTML = `
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">
-                            <img src="${datosReceta.meals[0].strMealThumb}" class="img-fluid">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">${datosReceta.meals[0].strMeal}</h4>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" onclick="mostrarReceta(${datosReceta.meals[0].idMeal})">
-                                Abrir receta
-                            </button>
-                        </div>
-                    </div>`;
-                    console.log(datosReceta.meals[0].idMeal);
+                datosReceta.meals.forEach(dato=>{
+                    containerRecetas.append(crearTarjetaReceta(dato));
+                })
                
             })
         });
@@ -102,75 +89,6 @@
             `;
             containerRecetas.append(col);
         }
-
-
-        function obtenerDatos(url) {
-            return fetch(url).then(res => res.json());
-        }
-
-
-        function mostrarReceta(idReceta) {
-            const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceta}`;
-            console.log(url);
-            let modalTitle=document.querySelector(".modal-title");
-            console.log(modalTitle);
-            let modalContenido=document.querySelector(".modal-body p");
-            let modalImg=document.querySelector(".modal-body img");
-            let modalUl=document.querySelector(".modal-body ul");
-            const btnFavoritos=document.querySelector(".modal-footer button:nth-child(1)");           
-
-            obtenerDatos(url)
-            .then((datosReceta,index) => {
-                const receta = datosReceta.meals[0];
-                modalTitle.textContent = receta.strMeal;
-                modalImg.setAttribute("src",receta.strMealThumb);
-                modalContenido.textContent = receta.strInstructions;
-
-                console.log(modalTitle);
-                // const ingredientes = document.querySelector(".modal-body ul");
-                modalUl.innerHTML = "";
-                for (let i = 1; i <= 20; i++) {
-                    const ingrediente = receta[`strIngredient${i}`];
-                    const medida = receta[`strMeasure${i}`];
-                    if(ingrediente!="" && ingrediente!=null){
-                        modalUl.innerHTML+=`
-                            <li>${ingrediente} - ${medida}</li>
-                        `;
-                    }
-                }
-
-                // Modificar el botón del modal para usar onclick
-                const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
-                btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
-            });    
-        }
-        
-        // idRecetasAlmacenadas.forEach(id => {
-        //     let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-        //     console.log(url);
-        //     fetch(url).
-        //     then(res => res.json())
-        //     .then(datosReceta=>{
-        //         const col = document.createElement("div");
-        //         col.classList.add("col-md-4");
-        //         col.innerHTML = `
-        //             <div class="card text-white bg-primary mb-3">
-        //                 <div class="card-header">
-        //                     <img src="${datosReceta.meals[0].strMealThumb}" class="img-fluid">
-        //                 </div>
-        //                 <div class="card-body">
-        //                     <h4 class="card-title">${datosReceta.meals[0].strMeal}</h4>
-        //                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" )">
-        //                         Abrir receta
-        //                     </button>
-        //                 </div>
-        //             </div>`;
-
-        //         containerRecetas.append(col);
-        //     })
-
-            
-        // });
         
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

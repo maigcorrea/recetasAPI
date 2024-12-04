@@ -80,7 +80,7 @@ function mostrarReceta(idReceta) {
         }
 
         // Modificar el botón del modal para usar onclick
-        const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
+        // const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
         btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
     });    
 }
@@ -95,7 +95,6 @@ function guardarComoFavorito(idReceta) {
         idFavoritos.forEach((id,index)=>{
             localStorage.setItem(index,id);
         })
-        //Aquí saldría un modal diciendo guardado correctamente
     }
 }
 
