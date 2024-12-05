@@ -98,6 +98,10 @@ function mostrarReceta(idReceta) {
 
 function guardarComoFavorito(idReceta) {
     const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
+    let toastContainer=document.createElement("div");
+    
+    btnFavoritos.setAttribute("id","liveToastBtn");
+
     if(!idFavoritos.includes(idReceta)){
         //Vaciar el localStorage
         localStorage.clear();
@@ -111,6 +115,37 @@ function guardarComoFavorito(idReceta) {
         // })
 
         //TOAST
+    toastContainer.innerHTML=`
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Bieeen</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Receta añadida correctamente
+    </div>
+  </div>
+</div>
+    `;
+
+    document.body.append(toastContainer);
+
+    // //Inicializar el toast desde aquí, porque no
+    // const toastElement = toastContainer.querySelector('.toast');
+    // const toast = new bootstrap.Toast(toastElement);
+
+    // //Mostrar el toast
+    // toast.show(); 
+
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+
+    if (toastTrigger) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastBootstrap.show()
+    }
     }else{
         //Actualizar el array borrando el id que coincida con el de la receta
         console.log(idFavoritos);
@@ -126,7 +161,15 @@ function guardarComoFavorito(idReceta) {
         localStorage.clear();
 
         //Actualizar el localStorage con el array actualizado
-        localStorage.setItem("favoritos",JSON.stringify(idFavoritos));
+
+        if (idFavoritos.length === 0) {
+            //Lo que se almacena en el localStorage es de tipo string, si el array está vacío, la cadena que queda en el localStorage son los [], que representa un array vacio.Sin embargo, aunque el array esté vacío, localStorage no elimina automáticamente las claves. Esto significa que la clave favoritos seguirá existiendo en localStorage, pero contendrá el valor "[]".
+            localStorage.removeItem("favoritos");  // Elimina la clave si el array está vacío
+        } else {
+            localStorage.setItem("favoritos", JSON.stringify(idFavoritos));  // Guarda solo si hay elementos
+        }
+
+        
     }
 
     //Cambiar el texto del botón por eliminar
