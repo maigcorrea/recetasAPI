@@ -67,7 +67,7 @@ function mostrarReceta(idReceta) {
         modalImg.setAttribute("src",receta.strMealThumb);
         modalContenido.textContent = receta.strInstructions;
 
-        // const ingredientes = document.querySelector(".modal-body ul");
+
         modalUl.innerHTML = "";
         for (let i = 1; i <= 20; i++) {
             const ingrediente = receta[`strIngredient${i}`];
@@ -80,7 +80,6 @@ function mostrarReceta(idReceta) {
         }
 
         //Cambiar el texto del botón por eliminar
-        console.log(idFavoritos);
         if(!idFavoritos.includes(idReceta)){
             btnFavoritos.textContent="Guardar";
         }else{
@@ -89,7 +88,6 @@ function mostrarReceta(idReceta) {
         
 
         // Modificar el botón del modal para usar onclick
-        // const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
         btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
     });    
 }
@@ -106,13 +104,11 @@ function guardarComoFavorito(idReceta) {
         //Vaciar el localStorage
         localStorage.clear();
 
-        // console.log(idFavoritos);
+
         idFavoritos.push(idReceta);
         
         localStorage.setItem("favoritos",JSON.stringify(idFavoritos));
-        // idFavoritos.forEach((id,index)=>{
-        //     localStorage.setItem(index,id);
-        // })
+
 
         //TOAST AL GUARDAR LA RECETA
         toastContainer.innerHTML=`
@@ -141,20 +137,18 @@ function guardarComoFavorito(idReceta) {
 
     }else{
         //Actualizar el array borrando el id que coincida con el de la receta
-        console.log(idFavoritos);
-
         idFavoritos.forEach((id,index)=>{
             if(id==idReceta){
                 idFavoritos.splice(index,1);
             }
         })
-        console.log(idFavoritos);
-        //Borrar el localStorage
 
+
+        //Borrar el localStorage
         localStorage.clear();
 
+        
         //Actualizar el localStorage con el array actualizado
-
         if (idFavoritos.length === 0) {
             //Lo que se almacena en el localStorage es de tipo string, si el array está vacío, la cadena que queda en el localStorage son los [], que representa un array vacio.Sin embargo, aunque el array esté vacío, localStorage no elimina automáticamente las claves. Esto significa que la clave favoritos seguirá existiendo en localStorage, pero contendrá el valor "[]".
             localStorage.removeItem("favoritos");  // Elimina la clave si el array está vacío

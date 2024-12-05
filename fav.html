@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,7 @@
                     <h2>Ingredientes</h2><ul></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary favoritos" >Guardar Favorito</button>   <!--onclick="guardarComoFavorito(idReceta)" -->
+                    <button type="button" class="btn btn-primary favoritos" >Guardar Favorito</button>  
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -72,17 +72,14 @@
             //Crear tarjeta
             idFavoritos.forEach(id => {
             let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-            console.log(url);
+
             fetch(url).
             then(res => res.json())
             .then(datosReceta=>{
                 datosReceta.meals.forEach(dato=>{
                     containerRecetas.append(crearTarjetaReceta(dato));
                 })
-               
             })
-
-            console.log(idFavoritos);
         });
 
         }else{
@@ -93,10 +90,6 @@
             `;
             containerRecetas.append(col);
         }
-        
-        // btnFav.addEventListener("click",()=>{
-            
-        // })
         
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
