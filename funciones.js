@@ -88,13 +88,14 @@ function mostrarReceta(idReceta) {
 
 
 function guardarComoFavorito(idReceta) {
-            
+        //Vaciar el array y luego llenarlo de nuevo
     if(!idFavoritos.includes(idReceta)){
         idFavoritos.push(idReceta);
         
-        idFavoritos.forEach((id,index)=>{
-            localStorage.setItem(index,id);
-        })
+        localStorage.setItem("favoritos",JSON.stringify(idFavoritos));
+        // idFavoritos.forEach((id,index)=>{
+        //     localStorage.setItem(index,id);
+        // })
     }
 }
 

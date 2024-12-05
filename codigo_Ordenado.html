@@ -71,12 +71,8 @@
     <script>
         const selectorCategorias = document.querySelector("#categoriaSelect"); 
         const row = document.querySelector("#recetas .row");
-        let idFavoritos= [];//Array donde se almacenará el id de las recetas añadidas a favoritos, si hay algo en el localStorage se carga en el array, si no hay nada, se deja vacío
-        if(localStorage.length!=0){
-            for (let index=0; index<localStorage.length; index++) {
-                idFavoritos.push(localStorage.getItem(index));
-            }
-        }
+        let idFavoritos= localStorage.getItem("favoritos")||[];//Array donde se almacenará el id de las recetas añadidas a favoritos, si hay algo en el localStorage se carga en el array, si no hay nada, se deja vacío
+        
 
 
 

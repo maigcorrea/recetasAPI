@@ -51,7 +51,7 @@
                     <h2>Ingredientes</h2><ul></ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Guardar Favorito</button>   <!--onclick="guardarComoFavorito(idReceta)" -->
+                    <button type="button" class="btn btn-primary favoritos">Guardar Favorito</button>   <!--onclick="guardarComoFavorito(idReceta)" -->
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -60,6 +60,7 @@
     <script src="funciones.js"></script>
     <script>
         const containerRecetas=document.querySelector("#recetas .row");
+        const btnFav=document.querySelector(".favoritos");
 
         //Lo que haya en el local storage se mete en un array
         let idFavoritos=[];
@@ -89,6 +90,10 @@
             `;
             containerRecetas.append(col);
         }
+        
+        btnFav.addEventListener("click",()=>{
+            
+        })
         
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
