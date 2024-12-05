@@ -114,38 +114,31 @@ function guardarComoFavorito(idReceta) {
         //     localStorage.setItem(index,id);
         // })
 
-        //TOAST
-    toastContainer.innerHTML=`
-        <div class="toast-container position-fixed top-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="me-auto">Bieeen</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Receta añadida correctamente
-    </div>
-  </div>
-</div>
-    `;
+        //TOAST AL GUARDAR LA RECETA
+        toastContainer.innerHTML=`
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                    <strong class="me-auto">App Recetas</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                    Agregado correctamente
+                    </div>
+                </div>
+            </div>
+        `;
 
-    document.body.append(toastContainer);
+        document.body.append(toastContainer);
 
-    // //Inicializar el toast desde aquí, porque no
-    // const toastElement = toastContainer.querySelector('.toast');
-    // const toast = new bootstrap.Toast(toastElement);
+        const toastTrigger = document.getElementById('liveToastBtn')
+        const toastLiveExample = document.getElementById('liveToast')
 
-    // //Mostrar el toast
-    // toast.show(); 
+        if (toastTrigger) {
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+        }
 
-    const toastTrigger = document.getElementById('liveToastBtn')
-    const toastLiveExample = document.getElementById('liveToast')
-
-    if (toastTrigger) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        toastBootstrap.show()
-    }
     }else{
         //Actualizar el array borrando el id que coincida con el de la receta
         console.log(idFavoritos);
@@ -169,7 +162,27 @@ function guardarComoFavorito(idReceta) {
             localStorage.setItem("favoritos", JSON.stringify(idFavoritos));  // Guarda solo si hay elementos
         }
 
-        
+        // TOAST AL ELIMINAR LA RECETA
+        toastContainer.innerHTML = `
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="liveToastRemove" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">App Recetas</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Eliminado correctamente.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.append(toastContainer);
+
+        // Mostrar el toast
+        const toastLiveExample = document.getElementById('liveToastRemove');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show(); 
     }
 
     //Cambiar el texto del botón por eliminar
@@ -180,3 +193,32 @@ function guardarComoFavorito(idReceta) {
     }
 }
 
+
+// function mostrarToast(titulo,desc){
+//     let toastContainer=document.createElement("div");
+//     toastContainer.innerHTML=`
+//     <div class="toast-container position-fixed top-0 end-0 p-3">
+//         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+//             <div class="toast-header">
+//             <strong class="me-auto">${titulo}</strong>
+//             <small>11 mins ago</small>
+//             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+//             </div>
+//             <div class="toast-body">
+//             ${desc}
+//             </div>
+//         </div>
+//     </div>
+// `;
+
+// document.body.append(toastContainer);
+
+// const toastTrigger = document.getElementById('liveToastBtn')
+// const toastLiveExample = document.getElementById('liveToast')
+
+// if (toastTrigger) {
+//     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+//     toastBootstrap.show()
+// }
+
+// }
