@@ -102,7 +102,7 @@ function guardarComoFavorito(idReceta) {
         //Vaciar el localStorage
         localStorage.clear();
 
-        console.log(idFavoritos);
+        // console.log(idFavoritos);
         idFavoritos.push(idReceta);
         
         localStorage.setItem("favoritos",JSON.stringify(idFavoritos));
@@ -110,11 +110,26 @@ function guardarComoFavorito(idReceta) {
         //     localStorage.setItem(index,id);
         // })
 
+        //TOAST
+    }else{
+        //Actualizar el array borrando el id que coincida con el de la receta
+        console.log(idFavoritos);
 
+        idFavoritos.forEach((id,index)=>{
+            if(id==idReceta){
+                idFavoritos.splice(index,1);
+            }
+        })
+        console.log(idFavoritos);
+        //Borrar el localStorage
+
+        localStorage.clear();
+
+        //Actualizar el localStorage con el array actualizado
+        localStorage.setItem("favoritos",JSON.stringify(idFavoritos));
     }
 
     //Cambiar el texto del botón por eliminar
-    console.log(idFavoritos);
     if(!idFavoritos.includes(idReceta)){
         btnFavoritos.textContent="Guardar";
     }else{
