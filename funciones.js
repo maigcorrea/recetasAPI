@@ -79,6 +79,15 @@ function mostrarReceta(idReceta) {
             }
         }
 
+        //Cambiar el texto del botón por eliminar
+        console.log(idFavoritos);
+        if(!idFavoritos.includes(idReceta)){
+            btnFavoritos.textContent="Guardar";
+        }else{
+            btnFavoritos.textContent="Eliminar";
+        }
+        
+
         // Modificar el botón del modal para usar onclick
         // const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
         btnFavoritos.setAttribute("onclick", `guardarComoFavorito(${receta.idMeal})`);
@@ -88,11 +97,11 @@ function mostrarReceta(idReceta) {
 
 
 function guardarComoFavorito(idReceta) {
-    
+    const btnFavoritos = document.querySelector(".modal-footer button:nth-child(1)");
     if(!idFavoritos.includes(idReceta)){
         //Vaciar el localStorage
         localStorage.clear();
-        
+
         console.log(idFavoritos);
         idFavoritos.push(idReceta);
         
@@ -100,6 +109,16 @@ function guardarComoFavorito(idReceta) {
         // idFavoritos.forEach((id,index)=>{
         //     localStorage.setItem(index,id);
         // })
+
+
+    }
+
+    //Cambiar el texto del botón por eliminar
+    console.log(idFavoritos);
+    if(!idFavoritos.includes(idReceta)){
+        btnFavoritos.textContent="Guardar";
+    }else{
+        btnFavoritos.textContent="Eliminar";
     }
 }
 
