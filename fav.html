@@ -63,12 +63,13 @@
         const btnFav=document.querySelector(".favoritos");
 
         //Lo que haya en el local storage se mete en un array
-        let idFavoritos=[];
+        let idFavoritos;
         if(localStorage.length!=0){
-            for (let index=0; index<localStorage.length; index++) {
-                idFavoritos.push(localStorage.getItem(index));
-            }
+            //Actualizar el array donde guardo el array de ids del local storage
+                idFavoritos=localStorage.getItem("favoritos");
+                idFavoritos=JSON.parse(idFavoritos);
 
+                //Crear tarjeta
             idFavoritos.forEach(id => {
             let url=`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
             console.log(url);
