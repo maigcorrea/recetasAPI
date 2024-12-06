@@ -5,29 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recetas</title>
     <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css">
-    <style>
-        nav a {
-            color: white;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-left: 20px;
-        }
-        header h1 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        header h1 span { color: black; }
-        .modal-content { height: 800px; overflow-y: scroll; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="header" class="container bg-danger py-4">
+    <header id="header" class="container-fluid py-4">
         <div class="row">
-            <div class="col"><h1>R<span>A</span>PPI</h1></div>
-            <nav class="col-auto ms-auto">
+            <div class="col px-5"><h1>R<span>A</span>PPI</h1></div>
+            <nav class="col-auto ms-auto px-5">
                 <a href="index.html">Inicio</a>
                 <a href="fav.html">Favoritos</a>
             </nav>
@@ -37,7 +21,7 @@
     <div class="container my-5" id="categorias">
         <div class="row">
             <select id="categoriaSelect" class="col-md-6 offset-md-3 py-2" onchange="mostrarRecetasDeLaCategoria(this.value)">
-                <option value="" disabled selected>--Seleccionar categoría</option>
+                <option value="" disabled selected> -- Seleccionar categoría</option>
             </select>
         </div>
     </div>

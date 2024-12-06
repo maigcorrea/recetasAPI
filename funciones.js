@@ -34,13 +34,13 @@ function crearTarjetaReceta(receta) {
     const col = document.createElement("div");
     col.classList.add("col-md-4");
     col.innerHTML = `
-        <div class="card text-white bg-primary mb-3">
+        <div class="card text-white mb-3 main-card">
             <div class="card-header">
                 <img src="${receta.strMealThumb}" class="img-fluid">
             </div>
             <div class="card-body">
                 <h4 class="card-title">${receta.strMeal}</h4>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emergente" onclick="mostrarReceta(${receta.idMeal})">
+                <button type="button" class="btn btn-primary abrir" data-bs-toggle="modal" data-bs-target="#emergente" onclick="mostrarReceta(${receta.idMeal})">
                     Abrir receta
                 </button>
             </div>
@@ -61,7 +61,7 @@ function mostrarReceta(idReceta) {
     
 
     obtenerDatos(url)
-    .then((datosReceta,index) => {
+    .then((datosReceta) => {
         const receta = datosReceta.meals[0];
         modalTitle.textContent = receta.strMeal;
         modalImg.setAttribute("src",receta.strMealThumb);

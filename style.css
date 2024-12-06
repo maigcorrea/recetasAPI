@@ -1,0 +1,101 @@
+:root{
+    --background:#CEDCED;
+    --header:#91B0F6;
+    --title:white;
+    --links:white;
+    --cardTitles:black;
+    --cardBodyBg:#748fcd;
+}
+
+body{
+    background-color: var(--background);
+
+    header{
+        background-color: var(--header);
+        border-bottom: 2px solid #5a19ff;
+        h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--title);
+        }
+
+        span { 
+            color: rgb(9, 7, 101);
+        }
+
+        nav a {
+            color: var(--links);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-left: 20px;
+            padding: 10px;
+        }
+
+        nav a:hover{
+            background-color: whitesmoke;
+            color: var(--header);
+        }
+    }
+
+    /* Select */
+    #categoriaSelect{
+        background-color: #D6DFFA;
+        border-color: #5a19ff;
+        outline: none;
+        option:nth-child(even){
+            background-color:#bbc6ec ;
+        }
+    }
+
+
+    /* Cartas */
+    .main-card{
+        height: 570px;
+
+        .card-header{
+            background-color: var(--header);
+        }
+
+        .card-body{
+            background-color: var(--cardBodyBg);
+            .card-title{
+                height: 50px;
+                margin-bottom: 30px;
+            }
+
+            .abrir{
+                width: 100%;
+            }
+        }
+    }
+
+    /* Modal */
+    .modal-content {
+        height: 800px; overflow-y: scroll; 
+        color: black;
+        .modal-header{
+            background-color: var(--cardBodyBg);
+        }
+
+        .modal-body{
+            background-color: var(--background);
+        }
+
+        .modal-footer{
+            background-color: var(--cardBodyBg);
+        }
+    }
+
+
+    /* Toast */
+    .toast-header{
+        background-color: #1a3e31;
+    }
+
+    .toast-body{
+        background-color: #92baab;
+        color: black;
+    }
+}
