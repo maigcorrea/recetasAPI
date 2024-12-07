@@ -39,6 +39,10 @@ body{
         }
     }
 
+    .noRecetasMsj{
+        color: black;
+    }
+
     /* Select */
     #categoriaSelect{
         background-color: #D6DFFA;
