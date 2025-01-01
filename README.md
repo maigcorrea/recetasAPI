@@ -1,10 +1,10 @@
 # PRACTICA_III_API_REST_EXPLORADOR_RECETAS
 
-##OBJETIVO
+## OBJETIVO
 Desarrollar en JavaScript un buscador de recetas interactivo que te permitirá 
 explorar y guardar recetas favoritas (Ver captura en video para ver el resultado final) 
 
-##CARACTERÍSTICAS PRINCIPALES
+## CARACTERÍSTICAS PRINCIPALES
 - Búsqueda por Categorías: Implementa un sistema para explorar recetas por categorías, 
 permitiendo a los usuarios filtrar por dichas categorías. 
 
